@@ -37,6 +37,16 @@ void LoadGameData()
 	{
 		LogError("[DHooks] Failed to create detour for CGameEventManager::CreateEvent");
 	}
+
+	StartPrepSDKCall(SDKCall_Raw);
+	PrepSDKCall_SetFromConf(gamedata, SDKConf_Virtual, "CGameEventManager::LoadEventsFromFile");
+	PrepSDKCall_SetReturnInfo(SDKType_PlainOldData, SDKPass_Plain);
+	PrepSDKCall_AddParameter(SDKType_String, SDKPass_Pointer);
+	g_hSDKLoadEvents = EndPrepSDKCall();
+	if (!g_hSDKLoadEvents)
+	{
+		LogError("[SDK] Failed to create call to CGameEventManager::LoadEventsFromFile");
+	}
 }
 
 
