@@ -1,5 +1,5 @@
 "Events"
-{
+{   // These Seem Correct.
 	"player_hurt"
     {
         "userid" "short"

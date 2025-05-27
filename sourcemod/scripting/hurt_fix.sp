@@ -16,12 +16,12 @@ public Plugin myinfo =
 	author		=	"The FatCat",
 	description	=	"Fixes the player_hurt and npc_hurt events to use a long(32 bits) instead of a short(16 bits)",
 	version		=	VERSION,
-	url			=	"",
+	url			=	"https://github.com/ChaseTownsend/Event-Fix",
 };
 
 public void OnMapStart()
 {
-    if (g_aGameEventManager && g_hSDKLoadEvents)
+    if (g_aGameEventManager && g_hSDKLoadEvents) // Where does this get set?
 	{
 		char eventsFile[PLATFORM_MAX_PATH];
 		BuildPath(Path_SM, eventsFile, sizeof(eventsFile), "data/events/events.res");
