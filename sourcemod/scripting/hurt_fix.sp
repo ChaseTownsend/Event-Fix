@@ -9,10 +9,11 @@
 
 // Dhooks
 DynamicDetour g_hDetourCreateEvent;
-
+//
 Address g_aGameEventManager;
 Handle g_hSDKLoadEvents
 
+// Plugin Info
 public Plugin myinfo =
 {
 	name		=	"(PRE-RELEASE) Damage Events Fix",
@@ -21,6 +22,23 @@ public Plugin myinfo =
 	version		=	VERSION,
 	url			=	"https://github.com/ChaseTownsend/Event-Fix",
 };
+
+
+void LoadGameData()
+{
+	GameData gamedata = new GameData("events");
+	if (!gamedata)
+	{
+		SetFailState("[SDK] Failed to locate gamedata file \"events.txt\"");
+	}
+	
+	g_hDetourCreateEvent = DynamicDetour.FromConf(gamedata, "CGameEventManager::CreateEvent");
+	if (!g_hDetourCreateEvent || !g_hDetourCreateEvent.Enable(Hook_Pre, Detour_CreateEvent))
+	{
+		LogError("[DHooks] Failed to create detour for CGameEventManager::CreateEvent");
+	}
+}
+
 
 public void OnPluginStart()
 {
@@ -32,14 +50,7 @@ public void OnPluginStart()
 	}
 }
 
-void LoadGamedata()
-{
-	g_hDetourCreateEvent = DynamicDetour.FromConf(gamedata, "CGameEventManager::CreateEvent");
-	if (!g_hDetourCreateEvent || !g_hDetourCreateEvent.Enable(Hook_Pre, Detour_CreateEvent))
-	{
-		LogError("[DHooks] Failed to create detour for CGameEventManager::CreateEvent");
-	}
-}
+
 public void OnMapStart()
 {
     if (g_aGameEventManager && g_hSDKLoadEvents)
@@ -60,4 +71,10 @@ public void OnMapStart()
 	{
 		LogError("FAILED to load custom events file (Missing Gamedata!)");
 	}
+}
+
+public MRESReturn Detour_CreateEvent(Address eventManager, DHookReturn returnVal, DHookParam params)
+{
+	g_aGameEventManager = eventManager;
+	return MRES_Ignored;
 }
