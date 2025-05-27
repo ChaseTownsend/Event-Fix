@@ -2,10 +2,13 @@
 
 // Includes
 #include <sourcemod>
-#include <sdktools>
+#include <dhooks>
 
 // Defines
 #define VERSION "0.0.1"
+
+// Dhooks
+DynamicDetour g_hDetourCreateEvent;
 
 Address g_aGameEventManager;
 Handle g_hSDKLoadEvents
@@ -19,9 +22,27 @@ public Plugin myinfo =
 	url			=	"https://github.com/ChaseTownsend/Event-Fix",
 };
 
+public void OnPluginStart()
+{
+	LoadGameData();
+
+	if (g_hDetourCreateEvent)
+	{
+		CreateEvent("give_me_my_cgameeventmanager_pointer", true);
+	}
+}
+
+void LoadGamedata()
+{
+	g_hDetourCreateEvent = DynamicDetour.FromConf(gamedata, "CGameEventManager::CreateEvent");
+	if (!g_hDetourCreateEvent || !g_hDetourCreateEvent.Enable(Hook_Pre, Detour_CreateEvent))
+	{
+		LogError("[DHooks] Failed to create detour for CGameEventManager::CreateEvent");
+	}
+}
 public void OnMapStart()
 {
-    if (g_aGameEventManager && g_hSDKLoadEvents) // Where does this get set?
+    if (g_aGameEventManager && g_hSDKLoadEvents)
 	{
 		char eventsFile[PLATFORM_MAX_PATH];
 		BuildPath(Path_SM, eventsFile, sizeof(eventsFile), "data/events/events.res");
