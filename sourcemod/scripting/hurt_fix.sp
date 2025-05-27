@@ -5,7 +5,7 @@
 #include <dhooks>
 
 // Defines
-#define VERSION "0.0.1"
+#define VERSION "1.0.0"
 
 // Dhooks
 DynamicDetour g_hDetourCreateEvent;
@@ -16,7 +16,7 @@ Handle g_hSDKLoadEvents
 // Plugin Info
 public Plugin myinfo =
 {
-	name		=	"(PRE-RELEASE) Damage Events Fix",
+	name		=	"Damage Events Fix",
 	author		=	"The FatCat",
 	description	=	"Fixes the player_hurt and npc_hurt events to use a long(32 bits) instead of a short(16 bits)",
 	version		=	VERSION,
