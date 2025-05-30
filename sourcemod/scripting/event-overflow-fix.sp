@@ -16,11 +16,11 @@ Handle g_hSDKLoadEvents
 // Plugin Info
 public Plugin myinfo =
 {
-	name		=	"Damage Events Fix",
+	name		=	"Event Overflow Fixes",
 	author		=	"The FatCat",
-	description	=	"Fixes the player_hurt and npc_hurt events to use a long(32 bits) instead of a short(16 bits)",
+	description	=	"Fixes Many game events that flow over the 15-bit limit",
 	version		=	VERSION,
-	url			=	"https://github.com/ChaseTownsend/Event-Fix",
+	url			=	"https://github.com/ChaseTownsend/SM-Event-Overflow-Fix",
 };
 
 
