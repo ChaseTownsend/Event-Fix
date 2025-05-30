@@ -5,7 +5,7 @@
 #include <dhooks>
 
 // Defines
-#define VERSION "1.0.0"
+#define VERSION "1.0.1"
 
 // Dhooks
 DynamicDetour g_hDetourCreateEvent;
