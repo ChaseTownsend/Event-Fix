@@ -1,6 +1,6 @@
 # What does this plugin do?
-#### TLDR : Fixes the Maximum damage shown (32,767 -> 2,147,483,647).
-This Plugin Fixes the Visual Damage events being capped at 32,767 (16-bits), and increases that cap to 2,147,483,647 (32-bits).
+#### TLDR : Fixes the Maximum number shown in Engine events (32,767 -> 2,147,483,647).
+This Plugin fixes many Events that flow over the 15-bit limit (32,767)
 <br><br>
 
 > [!IMPORTANT]
